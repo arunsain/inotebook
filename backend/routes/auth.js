@@ -44,6 +44,7 @@ router.post('/createuser',[
      user :{
        id : user.id
      } 
+
     };
     
     const jwtToken = jwt.sign(userToken, JSON_SEC_KEY);
@@ -56,6 +57,57 @@ router.post('/createuser',[
       res.status(500).send('some error occured');
   }
     
+})
+
+
+
+router.post('/login',[
+  body('email','email must be  valid').isEmail(),
+  body('password','password must be required').exists(),
+  
+], async (req,res) =>{
+
+// this code run if request parameter fail in validation
+  const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+     return res.status(400).json({ errors: errors.array() });
+   }
+
+   try {
+     
+   //check wehther user email  exit in database
+   let user = await User.findOne({email:req.body.email});
+   if(!user){
+    return  res.status(400).json({ message:"please enter correct credentials"})
+
+   }
+ // compar hashing password
+  const comparePass =  bcrypt.compareSync(req.body.password, user.password); // true
+
+  if(!comparePass){
+    return  res.status(400).json({ message:"please enter correct credentials"})
+  }
+
+
+
+   const userToken = {
+
+    user :{
+      id : user.id
+    } 
+    
+   };
+   
+   const jwtToken = jwt.sign(userToken, JSON_SEC_KEY);
+
+  return res.status(200).json({jwtToken});
+
+ } catch (error) {
+
+     console.log(error.message);
+     res.status(500).send('some error occured');
+ }
+   
 })
 
 module.exports = router;
