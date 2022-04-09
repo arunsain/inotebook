@@ -1,8 +1,17 @@
-import React from 'react'
+import React ,{ useContext} from 'react';
+import  NoteContext from  "../context/notes/noteContext"
+
 
 const About = () => {
+
+ const sd =  useContext(NoteContext);
+ console.log(sd);
   return (
-    <>About is working</>
+    <>
+    <div>
+    About is working wdwddeded {sd.d.name}
+    </div>
+    </>
   )
 }
 
