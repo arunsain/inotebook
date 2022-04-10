@@ -60,9 +60,15 @@ const editNotes = () =>{
 
   alert('editNotes');
 }
-const deleteNotes = () =>{
+const deleteNotes = (id) =>{
+  console.log(id);
+const  newNotes =  notes.filter((note)=>{
+    return note._id !== id;
 
-  alert('deleteNotes');
+  });
+  setNote(newNotes);
+
+ 
 }
 
   return (
