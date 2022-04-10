@@ -8,6 +8,7 @@ import  Navbar from  "./components/Navbar"
 import  Home from  "./components/Home"
 import  About from  "./components/About"
 import  NoteContext from  "./context/notes/noteContext"
+import { Alert } from './components/Alert';
 
 
 
@@ -16,9 +17,7 @@ import  NoteContext from  "./context/notes/noteContext"
 
 
 function App() {
-  const d ={
-    "name": 'arun sain'
-  };
+  
 
 const initialNotes =   [
     {
@@ -40,14 +39,40 @@ const initialNotes =   [
       "__v": 0
     }
   ];
-const [notes,setNote] = useState(initialNotes)
+const [notes,setNote] = useState(initialNotes);
+
+const addNotes = (title,description,tags) =>{
+
+  const note = {
+    "_id": "620a897bdf5c4df7b9c07cf0",
+    "user": "620939067a851dba323a62e5",
+    "title": title,
+    "description": description,
+    "tags": tags,
+    "date": "2022-02-14T16:55:23.042Z",
+    "__v": 0
+  }
+  setNote(notes.concat(note));
+
+  alert('addNotes');
+}
+const editNotes = () =>{
+
+  alert('editNotes');
+}
+const deleteNotes = () =>{
+
+  alert('deleteNotes');
+}
+
   return (
    
 
 <>
     <BrowserRouter>
      <Navbar/>
-     <NoteContext.Provider  value={ {notes,setNote,d} }>
+     <Alert message="this is alert message"/>
+     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes} }>
     <Routes>
      
       <Route exact path="/"  element={<Home/>}>

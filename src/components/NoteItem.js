@@ -7,9 +7,15 @@ export const NoteItem = (props) => {
     <div className="card"  >
    
     <div className="card-body">
-      <h5 className="card-title">{title}</h5>
+    <div className="d-flex align-items-center" >
+        <h5 className="card-title">{title}</h5>
+        <i className="fa-solid fa-trash-can mx-2"></i>
+      <i className="fa-solid fa-pen-to-square mx-2"></i>
+    </div>
       <p className="card-text">{description}</p>
-      <a href="#" className="btn btn-primary">Go somewhere</a>
+    
+
+     
     </div>
   </div>
   </div>
