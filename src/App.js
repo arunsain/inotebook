@@ -18,7 +18,7 @@ import { Alert } from './components/Alert';
 
 function App() {
   
-
+const host = "http://localhost:5000";
 const initialNotes =   [
     {
       "_id": "620a894e01e38e7ad0e1509b",
@@ -28,40 +28,63 @@ const initialNotes =   [
       "tags": "dwwedw",
       "date": "2022-02-14T16:54:38.618Z",
       "__v": 0
-    },
-    {
-      "_id": "620a897bdf5c4df7b9c07cf0",
-      "user": "620939067a851dba323a62e5",
-      "title": "swfww",
-      "description": "wwfwf",
-      "tags": "dwwedw",
-      "date": "2022-02-14T16:55:23.042Z",
-      "__v": 0
     }
   ];
 const [notes,setNote] = useState(initialNotes);
 
-const addNotes = (title,description,tags) =>{
 
-  const note = {
-    "_id": "620a897bdf5c4df7b9c07cf0",
-    "user": "620939067a851dba323a62e5",
-    "title": title,
-    "description": description,
-    "tags": tags,
-    "date": "2022-02-14T16:55:23.042Z",
-    "__v": 0
-  }
-  setNote(notes.concat(note));
 
-  alert('addNotes');
+
+  const  fetchAllNotes = async () =>{
+
+    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json',
+        'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+       
+      }
+    });
+    const json = await response.json();
+    
+     setNote(json)
+  };
+
+
+const addNotes = async (title,description,tags) =>{
+
+  const response = await fetch(`${host}/api/notes/addnotes`, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+     
+    },
+    body: JSON.stringify({title,description,tags })
+  });
+  const json = await response.json();
+  
+  setNote(notes.concat(json.note));
+
+ 
 }
 const editNotes = () =>{
 
   alert('editNotes');
 }
-const deleteNotes = (id) =>{
-  console.log(id);
+const deleteNotes = async (id) =>{
+  // console.log(id);
+
+  const response = await fetch(`${host}/api/notes/deletenotes/${id}`, {
+    method: 'DELETE', 
+    headers: {
+      'Content-Type': 'application/json',
+      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+     
+    }
+  });
+  const json = await response.json();
+
 const  newNotes =  notes.filter((note)=>{
     return note._id !== id;
 
@@ -78,7 +101,7 @@ const  newNotes =  notes.filter((note)=>{
     <BrowserRouter>
      <Navbar/>
      <Alert message="this is alert message"/>
-     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes} }>
+     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes,fetchAllNotes} }>
     <Routes>
      
       <Route exact path="/"  element={<Home/>}>
