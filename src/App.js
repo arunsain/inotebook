@@ -68,9 +68,9 @@ const addNotes = async (title,description,tags) =>{
 
  
 }
-const editNotes = () =>{
-
-  alert('editNotes');
+const editNotes = (editNoteData) =>{
+console.log(editNoteData)
+  //alert('editNotes');
 }
 const deleteNotes = async (id) =>{
   // console.log(id);

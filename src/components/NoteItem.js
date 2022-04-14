@@ -3,7 +3,8 @@ import React,{ useContext,useState} from 'react'
 import  NoteContext from  "../context/notes/noteContext"
 
 export const NoteItem = (props) => {
-   const { _id, title ,description, tags} = props.note;
+   const {note,updateNoteData } = props;
+  
   // console.log(_id)
    const contextApi =   useContext(NoteContext);
   //const getNoteData =  useContext(NoteContext);
@@ -16,13 +17,13 @@ export const NoteItem = (props) => {
    
     <div className="card-body">
     <div className="d-flex align-items-center" >
-        <h5 className="card-title">{title}</h5>
+        <h5 className="card-title">{note.title}</h5>
         <i className="fa-solid fa-trash-can mx-2" onClick={() => {
-            deleteNotes(_id);
+            deleteNotes(note._id);
         }}></i>
-      <i className="fa-solid fa-pen-to-square mx-2"></i>
+      <i className="fa-solid fa-pen-to-square mx-2" onClick={ () =>{updateNoteData(props.note) }}></i>
     </div>
-      <p className="card-text">{description}</p>
+      <p className="card-text">{note.description}</p>
     
 
      
