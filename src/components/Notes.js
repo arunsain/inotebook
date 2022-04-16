@@ -16,21 +16,22 @@ export const Notes = () => {
   
       ref.current.click();
        setEditNoteData({id:noteDataForUpdate._id,title:noteDataForUpdate.title,description:noteDataForUpdate.description,tags:noteDataForUpdate.tags});
+       
   }
   const ref = useRef(null);
-
+  const refClose = useRef(null);
   const handleInput = (e) => {
   
     setEditNoteData({...editNoteData,[e.target.name]:e.target.value});
     
   }
-  const submitNote = (e) => {
+  const submitNoteEdit = (e) => {
     e.preventDefault();
     setEditNoteData({id:editNoteData.id,title:editNoteData.title,description:editNoteData.description,tags:editNoteData.tags});
   
     editNotes(editNoteData);
   
-    
+    refClose.current.click();
 }
 
 
@@ -75,15 +76,17 @@ export const Notes = () => {
     
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button onClick={submitNote} type="button" className="btn btn-primary">Save changes</button>
+        <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button disabled={editNoteData.title.length < 5 || editNoteData.description.length < 5 || editNoteData.tags.length < 5  } onClick={submitNoteEdit} type="button" className="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
     <div className="row my-3">
     <h1>Your Note</h1>
-    
+    <div className="container">
+    { notes.length === 0 && "no notes found" }
+    </div>
     {notes.map((note,index)=>{
         
     return <NoteItem key={index} note={note} updateNoteData={updateNoteData}/>

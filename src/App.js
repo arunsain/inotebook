@@ -68,8 +68,29 @@ const addNotes = async (title,description,tags) =>{
 
  
 }
-const editNotes = (editNoteData) =>{
+const editNotes = async (editNoteData) =>{
 console.log(editNoteData)
+const { id, title,description,tags } = editNoteData;
+
+
+  for(let index=0; index < notes.length; index++){
+    if(editNoteData.id === notes[index]._id){
+      notes[index].title = editNoteData.title;
+      notes[index].description = editNoteData.description
+      notes[index].tags = editNoteData.tags
+      break;
+    }
+
+  }
+  const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
+    method: 'PUT', 
+    headers: {
+      'Content-Type': 'application/json',
+      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+     
+    },
+    body: JSON.stringify({title,description,tags })
+  });
   //alert('editNotes');
 }
 const deleteNotes = async (id) =>{

@@ -41,7 +41,7 @@ export const AddNote = () => {
     <input  onChange={ handleInput} type="text" name="tags" className="form-control" id="tags" />
   </div>
  
-  <button onClick={submitNote} type="submit" className="btn btn-primary">Submit</button>
+  <button  disabled={note.title.length < 5 || note.description.length < 5 || note.tags.length < 5  } onClick={submitNote} type="submit" className="btn btn-primary">Submit</button>
 </form>
     </>
   )
