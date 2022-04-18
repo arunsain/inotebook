@@ -7,6 +7,8 @@ import {
 import  Navbar from  "./components/Navbar"
 import  Home from  "./components/Home"
 import  About from  "./components/About"
+import  Register from  "./components/Register"
+import  Login from  "./components/Login"
 import  NoteContext from  "./context/notes/noteContext"
 import { Alert } from './components/Alert';
 
@@ -68,6 +70,41 @@ const addNotes = async (title,description,tags) =>{
 
  
 }
+
+
+const newRegisterUser = async (name,email,password) =>{
+
+  const response = await fetch(`${host}/api/auth/createuser`, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({name,email,password})
+  });
+  const json = await response.json();
+  console.log(json);
+ // setNote(notes.concat(json.note));
+
+ 
+}
+
+const loginUser = async (email,password) =>{
+
+  const response = await fetch(`${host}/api/auth/login`, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({email,password })
+  });
+  const json = await response.json();
+  console.log(json);
+  sessionStorage.setItem("token", json.jwtToken);
+ 
+
+ 
+}
+
 const editNotes = async (editNoteData) =>{
 console.log(editNoteData)
 const { id, title,description,tags } = editNoteData;
@@ -122,12 +159,16 @@ const  newNotes =  notes.filter((note)=>{
     <BrowserRouter>
      <Navbar/>
      <Alert message="this is alert message"/>
-     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes,fetchAllNotes} }>
+     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes,fetchAllNotes,loginUser,newRegisterUser} }>
     <Routes>
      
       <Route exact path="/"  element={<Home/>}>
         </Route>
         <Route exact path="/about"  element={<About/>}>
+      </Route>
+      <Route exact path="/login"  element={<Login/>}>
+      </Route>
+      <Route exact path="/register"  element={<Register/>}>
       </Route>
     </Routes>
     </NoteContext.Provider>

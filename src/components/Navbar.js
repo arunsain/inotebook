@@ -22,7 +22,8 @@ const Navbar = () => {
       
       
       </ul>
-     
+      <Link className="btn btn-primary mx-2" to="/login" >Login</Link>
+      <Link className="btn btn-primary" to="/register">Register</Link>
     </div>
   </div>
 </nav>
