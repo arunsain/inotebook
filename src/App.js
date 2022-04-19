@@ -33,7 +33,7 @@ const initialNotes =   [
     }
   ];
 const [notes,setNote] = useState(initialNotes);
-
+const [alertdata,setAlertdata] = useState(null);
 
 
 
@@ -152,14 +152,23 @@ const  newNotes =  notes.filter((note)=>{
  
 }
 
+const alertBox = (message,type)=>{
+  setAlertdata({message:message,type:type});
+
+  setInterval(() => {
+   
+    setAlertdata(null);
+  }, 3000);
+}
+
   return (
    
 
 <>
     <BrowserRouter>
      <Navbar/>
-     <Alert message="this is alert message"/>
-     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes,fetchAllNotes,loginUser,newRegisterUser} }>
+     <Alert alertdata={alertdata}/>
+     <NoteContext.Provider  value={ {notes,setNote,addNotes,editNotes,deleteNotes,fetchAllNotes,loginUser,newRegisterUser,alertBox} }>
     <Routes>
      
       <Route exact path="/"  element={<Home/>}>

@@ -9,11 +9,11 @@ export const NoteItem = (props) => {
   // console.log(_id)
    const contextApi =   useContext(NoteContext);
   //const getNoteData =  useContext(NoteContext);
-  const { deleteNotes} = contextApi;
+  const { deleteNotes,alertBox} = contextApi;
   
    
   return (
-      <div className="col-md-3">
+      <div className="col-md-3 my-2">
     <div className="card"  >
    
     <div className="card-body">
@@ -21,6 +21,7 @@ export const NoteItem = (props) => {
         <h5 className="card-title">{props.note.title}</h5>
         <i className="fa-solid fa-trash-can mx-2" onClick={() => {
             deleteNotes(props.note._id);
+            alertBox('Note Delete Successfully','success');
         }}></i>
       <i className="fa-solid fa-pen-to-square mx-2" onClick={ () =>{updateNoteData(props.note) }}></i>
     </div>
