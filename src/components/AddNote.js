@@ -17,7 +17,7 @@ export const AddNote = () => {
   }
   const submitNote = (e) => {
     e.preventDefault();
-     
+     console.log(sessionStorage.getItem("token"));
       addNotes(note.title,note.description,note.tags);
       alertBox('New note added successfully','success');
       setNote({title:"",description:"",tags:""});

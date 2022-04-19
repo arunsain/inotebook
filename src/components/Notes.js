@@ -7,7 +7,9 @@ export const Notes = () => {
 
     const {notes , setNotes,fetchAllNotes,editNotes,alertBox} =  getNoteData;
     useEffect(() => {
+      if(sessionStorage.getItem("token")){
       fetchAllNotes();
+    }
       // eslint-disable-next-line
   }, [])
 
@@ -89,7 +91,7 @@ export const Notes = () => {
     <div className="container">
     { notes.length === 0 && "no notes found" }
     </div>
-    {notes.map((note,index)=>{
+    { notes.map((note,index)=>{
         
     return <NoteItem key={index} note={note} updateNoteData={updateNoteData}/>
      

@@ -1,17 +1,24 @@
 import React,{useState,useContext} from 'react';
+import { useNavigate } from "react-router-dom";
 import  NoteContext from  "../context/notes/noteContext"
 
 export const Register = () => {
-
+  const navigate = useNavigate();
   const getNoteData =  useContext(NoteContext);
-  const {newRegisterUser} =  getNoteData;
+  const {newRegisterUser,alertBox} =  getNoteData;
   const [register,setRegister] = useState({name:"",email:"",password:""})
 
-  const registerForm = (e) =>{
+  const registerForm = async (e) =>{
     e.preventDefault();
    // console.log(login)
-    newRegisterUser(register.name,register.email,register.password);
-   //alert('asdj');
+   const response = await newRegisterUser(register.name,register.email,register.password);
+    if (response.status === "false") {
+      alertBox("all fields are required", "danger");
+      return false;
+    }
+    sessionStorage.setItem("token", response.jwtToken);
+    alertBox("you are login successfully", "success");
+    navigate("/");
   }
   const handleInput = (e) => {
     setRegister({...register,[e.target.name]:e.target.value});

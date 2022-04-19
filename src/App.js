@@ -8,6 +8,7 @@ import  Navbar from  "./components/Navbar"
 import  Home from  "./components/Home"
 import  About from  "./components/About"
 import  Register from  "./components/Register"
+import  Dashboard from  "./components/Dashboard"
 import  Login from  "./components/Login"
 import  NoteContext from  "./context/notes/noteContext"
 import { Alert } from './components/Alert';
@@ -25,9 +26,9 @@ const initialNotes =   [
     {
       "_id": "620a894e01e38e7ad0e1509b",
       "user": "620939067a851dba323a62e5",
-      "title": "swfww",
-      "description": "wwfwf",
-      "tags": "dwwedw",
+      "title": "testing",
+      "description": "testing",
+      "tags": "testing",
       "date": "2022-02-14T16:54:38.618Z",
       "__v": 0
     }
@@ -43,12 +44,12 @@ const [alertdata,setAlertdata] = useState(null);
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json',
-        'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+        'get-token': sessionStorage.getItem("token")
        
       }
     });
     const json = await response.json();
-    
+    console.log(json)
      setNote(json)
   };
 
@@ -59,7 +60,7 @@ const addNotes = async (title,description,tags) =>{
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json',
-      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+      'get-token': sessionStorage.getItem("token")
      
     },
     body: JSON.stringify({title,description,tags })
@@ -82,7 +83,7 @@ const newRegisterUser = async (name,email,password) =>{
     body: JSON.stringify({name,email,password})
   });
   const json = await response.json();
-  console.log(json);
+  return json;
  // setNote(notes.concat(json.note));
 
  
@@ -98,8 +99,7 @@ const loginUser = async (email,password) =>{
     body: JSON.stringify({email,password })
   });
   const json = await response.json();
-  console.log(json);
-  sessionStorage.setItem("token", json.jwtToken);
+  return json;
  
 
  
@@ -123,7 +123,7 @@ const { id, title,description,tags } = editNoteData;
     method: 'PUT', 
     headers: {
       'Content-Type': 'application/json',
-      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+      'get-token': sessionStorage.getItem("token")
      
     },
     body: JSON.stringify({title,description,tags })
@@ -137,7 +137,7 @@ const deleteNotes = async (id) =>{
     method: 'DELETE', 
     headers: {
       'Content-Type': 'application/json',
-      'get-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIwOTM5MDY3YTg1MWRiYTMyM2E2MmU1In0sImlhdCI6MTY0OTc4MjQyNX0.js9t1L0rawbozT20mww7vv2cvWduyxW4im8-GhyubQE'
+      'get-token': sessionStorage.getItem("token")
      
     }
   });
@@ -178,6 +178,8 @@ const alertBox = (message,type)=>{
       <Route exact path="/login"  element={<Login/>}>
       </Route>
       <Route exact path="/register"  element={<Register/>}>
+      </Route>
+      <Route exact path="/dashboard"  element={<Dashboard/>}>
       </Route>
     </Routes>
     </NoteContext.Provider>

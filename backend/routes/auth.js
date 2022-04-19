@@ -19,7 +19,7 @@ router.post(
     // this code run if request parameter fail in validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({status:"false",  errors: errors.array() });
     }
 
     try {
@@ -28,7 +28,7 @@ router.post(
       if (checkUser) {
         return res
           .status(400)
-          .json({ message: "user already exist with this email" });
+          .json({status:"false", message: "user already exist with this email" });
       }
 
       const salt = await bcrypt.genSaltSync(10);
@@ -49,7 +49,7 @@ router.post(
 
       const jwtToken = jwt.sign(userToken, JSON_SEC_KEY);
 
-      return res.status(200).json({ jwtToken });
+      return res.status(200).json({ status:"true", jwtToken: jwtToken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("some error occured");
@@ -69,7 +69,7 @@ router.post(
     // this code run if request parameter fail in validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ status:"false",errors: errors.array() });
     }
 
     try {
@@ -78,7 +78,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ message: "please enter correct credentials" });
+          .json({ status:"false", message: "please enter correct credentials" });
       }
       // compar hashing password
       const comparePass = bcrypt.compareSync(req.body.password, user.password); // true
@@ -86,7 +86,7 @@ router.post(
       if (!comparePass) {
         return res
           .status(400)
-          .json({ message: "please enter correct credentials" });
+          .json({ status:"false",  message: "please enter correct credentials" });
       }
 
       const userToken = {
@@ -97,7 +97,7 @@ router.post(
 
       const jwtToken = jwt.sign(userToken, JSON_SEC_KEY);
 
-      return res.status(200).json({ jwtToken });
+      return res.status(200).json({ status:"true", jwtToken:jwtToken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("some error occured");

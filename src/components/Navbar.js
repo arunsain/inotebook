@@ -1,6 +1,12 @@
 import React from 'react'
 import { Link ,useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () =>{
+    sessionStorage.removeItem("token");
+    navigate("/");
+  }
 
   const getLocation  = useLocation();
 
@@ -22,8 +28,11 @@ const Navbar = () => {
       
       
       </ul>
-      <Link className="btn btn-primary mx-2" to="/login" >Login</Link>
-      <Link className="btn btn-primary" to="/register">Register</Link>
+      { !sessionStorage.getItem("token")? <div><Link className="btn btn-primary mx-2" to="/login" >Login</Link>
+      <Link className="btn btn-primary" to="/register">Register</Link></div> :
+     <div><Link className="btn btn-primary mx-2" to="/dashboard">Dashboard</Link>
+     <button onClick={ handleLogout }className="btn btn-primary" >Logout</button>
+     </div>  }
     </div>
   </div>
 </nav>
