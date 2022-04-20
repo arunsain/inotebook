@@ -1,16 +1,25 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import  NoteContext from  "../context/notes/noteContext"
 
 export const Register = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(sessionStorage.getItem("token")){
+      navigate("/dashboard");
+    }
+    // eslint-disable-next-line
+}, [])
+
+
   const getNoteData =  useContext(NoteContext);
   const {newRegisterUser,alertBox} =  getNoteData;
   const [register,setRegister] = useState({name:"",email:"",password:""})
 
   const registerForm = async (e) =>{
     e.preventDefault();
-   // console.log(login)
+   
    const response = await newRegisterUser(register.name,register.email,register.password);
     if (response.status === "false") {
       alertBox("all fields are required", "danger");

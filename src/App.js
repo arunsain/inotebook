@@ -49,8 +49,9 @@ const [alertdata,setAlertdata] = useState(null);
       }
     });
     const json = await response.json();
-    console.log(json)
+   
      setNote(json)
+     return json;
   };
 
 
@@ -106,7 +107,7 @@ const loginUser = async (email,password) =>{
 }
 
 const editNotes = async (editNoteData) =>{
-console.log(editNoteData)
+
 const { id, title,description,tags } = editNoteData;
 
 
@@ -131,7 +132,7 @@ const { id, title,description,tags } = editNoteData;
   //alert('editNotes');
 }
 const deleteNotes = async (id) =>{
-  // console.log(id);
+ 
 
   const response = await fetch(`${host}/api/notes/deletenotes/${id}`, {
     method: 'DELETE', 
@@ -158,7 +159,7 @@ const alertBox = (message,type)=>{
   setInterval(() => {
    
     setAlertdata(null);
-  }, 3000);
+  }, 6000);
 }
 
   return (

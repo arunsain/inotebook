@@ -6,9 +6,9 @@ export const NoteItem = (props) => {
  
    const {updateNoteData } = props;
   
-  // console.log(_id)
+ 
    const contextApi =   useContext(NoteContext);
-  //const getNoteData =  useContext(NoteContext);
+
   const { deleteNotes,alertBox} = contextApi;
   
    

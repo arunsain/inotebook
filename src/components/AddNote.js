@@ -11,13 +11,13 @@ export const AddNote = () => {
  
   const [note,setNote ] = useState({title:"",description:"",tags:""})
   const handleInput = (e) => {
-    // console.log(e.target.value)
+   
       setNote({...note,[e.target.name]:e.target.value});
     //     alert('handle');
   }
   const submitNote = (e) => {
     e.preventDefault();
-     console.log(sessionStorage.getItem("token"));
+    
       addNotes(note.title,note.description,note.tags);
       alertBox('New note added successfully','success');
       setNote({title:"",description:"",tags:""});
